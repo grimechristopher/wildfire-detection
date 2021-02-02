@@ -1,5 +1,7 @@
-import sys
+# run.py
+# Used for testing and demonstrating how to call the checkImage function in detect_smoke 
 
+import sys
 from detect_smoke import *
 
 #img_path = "images/test/1.jpg" # Default test image loaded 
@@ -14,15 +16,15 @@ from detect_smoke import *
 #img_path = "Test images/city.png"
 
 img_paths = [ "images/test/1.jpg",
-			 "images/test/2.jpg",
-			 "images/test/3.jpg"
-			 "images/test/5.jpg"
-			 "images/test/6.jpg"
-			 "images/test/7.jpg"
-			 "images/test/small_smoke.jpg"
-			 "images/test/none.jpg"
-			 "images/test/mine-1.jpg"
-			]
+			  "images/test/2.jpg",
+			  "images/test/3.jpg"
+			  "images/test/5.jpg"
+			  "images/test/6.jpg"
+			  "images/test/7.jpg"
+			  "images/test/small_smoke.jpg"
+			  "images/test/none.jpg"
+			  "images/test/mine-1.jpg"
+			 ]
 
 for path in img_paths:
-	checkImage(path)
+	checkImage(path) # Call checkImage function in detect_smoke.py
