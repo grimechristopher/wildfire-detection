@@ -77,6 +77,7 @@ def checkImage(img_path):
 	    	(startX, startY, endX, endY) = box
 	    	cv2.rectangle(img_out, (startX, startY), (endX, endY), (0, 204, 255), 2)
 	    #cv2.imshow("Before", img_out)
+	    cv2.imwrite("images/detected/" + datetime.now().strftime("%Y%m%d%H%M%S"+"allboxes") + ".jpg", img_out)
 	    img_out = img.copy()
 			
 	    boxes = np.array([p[0] for p in labels[label]])
