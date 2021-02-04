@@ -17,13 +17,13 @@ from detect_smoke import *
 
 img_paths = [ "images/test/1.jpg",
 			  "images/test/2.jpg",
-			  "images/test/3.jpg"
-			  "images/test/5.jpg"
-			  "images/test/6.jpg"
-			  "images/test/7.jpg"
-			  "images/test/small_smoke.jpg"
-			  "images/test/none.jpg"
-			  "images/test/mine-1.jpg"
+			  "images/test/3.jpg",
+			  "images/test/5.jpg",
+			  "images/test/6.jpg",
+			  "images/test/7.jpg",
+			  "images/test/small_smoke.jpg",
+			  "images/test/none.jpg",
+			  "images/test/mine-1.jpg",
 			 ]
 
 for path in img_paths:
