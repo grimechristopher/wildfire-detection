@@ -58,7 +58,8 @@ model.add(Dense(units=1, activation='sigmoid')) # Output Layer
 
 # Compile the Model
 model.compile(optimizer='adam', loss='binary_crossentropy',metrics=['accuracy'])
-model.fit_generator(images, steps_per_epoch=40, epochs=settings.EPOCHS, validation_data=test, validation_steps=1000)
+#model.fit_generator(images, steps_per_epoch=40, epochs=settings.EPOCHS, validation_data=test, validation_steps=1000)
+model.fit_generator(images, steps_per_epoch=40, epochs=settings.EPOCHS, validation_data=test, validation_steps=7)
 
 # Create and print classification report
 
