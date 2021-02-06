@@ -1,3 +1,5 @@
+# https://www.pyimagesearch.com/2020/06/22/turning-any-cnn-image-classifier-into-an-object-detector-with-keras-tensorflow-and-opencv/
+
 # Imports
 from tensorflow.keras.applications import ResNet50
 from tensorflow.keras.applications.resnet import preprocess_input
@@ -24,45 +26,50 @@ def checkImage(img_path):
 
     # Load the classifier model
     model = load_model(settings.MODEL_PATH)
-
-    # Load image
+    # Load image to check for smoke
     img = cv2.imread(img_path)
     # Resize image
     img = imutils.resize(img, width=settings.WIDTH)
     windowHeight, windowWidth = img.shape[:2]
     # initialize the image pyramid
+    # image pyramid creates different sizes of the whole image
     pyramid = image_pyramid(img, scale=settings.PYR_SCALE, minSize=settings.MIN_SIZE) # Creates multiple sizes of image
 
     rois = [] # regions of interest
     coords = [] # coords of the rois
 
-    start = time.time() # Log time
+    start = time.time() # Log time it takes to detect smoke in the image
 
     for image in pyramid:
-	    scale =  windowWidth / float(image.shape[1])
+    	    # Find the scale of the pyramid image compared to the original
+	    scale = windowWidth / float(image.shape[1])
 	    for (x, y, roiOrig) in sliding_window(image, settings.SLIDE_STEP_SIZE, settings.MIN_SIZE):
+	    	# Coordinates are scaled to the pyramid image
 	    	x = int(x * scale)
 	    	y = int(y * scale)
     		w = int(settings.IMG_SIZE / 2 * scale)
     		h = int(settings.IMG_SIZE / 2 * scale)
-			
+		# Save the rois, breaks the image in to chuncks that will be checked for smoke
 	    	roi = cv2.resize(roiOrig, settings.INPUT_SIZE)
     		roi = img_to_array(roi)
     		roi = preprocess_input(roi)
-			
+		# Add to list of rois and coordinates
 	    	rois.append(roi)
 	    	coords.append((x, y, x + w, y + h))
+	    	
     end = time.time()	
 
     rois = np.array(rois, dtype="float32") # Convert rois to numpy array
-    # Classify each ROI
+    # Classify each ROI as smoke or none
     preds = model.predict(rois)
 
-    print(preds) # Print the predictions. predictions of 1 are smoke. anything less than 1 and it not sure.
+    print(preds) # Print the predictions. predictions of 1 are smoke. anything less than 1 and its not sure.
 
     # Label the predictions
     labels = {}
+    # Loop through each prediction
     for (i, p) in enumerate(preds):
+            # Predictions are slightly messed up. Need to fix
 	    if preds[i][0] == 1: # If the prediction is sure it detects smoke
 	    	label = "Smoke"
 	    	box = coords[i]
